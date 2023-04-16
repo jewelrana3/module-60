@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../provider/AuthProviders';
 
 const Home = () => {
+    const user = useContext(AuthContext)
     return (
         <div>
-            home
+           <p>{user && user.displayName}</p>
         </div>
     );
 };
