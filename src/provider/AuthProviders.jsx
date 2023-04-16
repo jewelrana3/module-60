@@ -8,7 +8,8 @@ export const AuthContext = createContext(null)
 const auth = getAuth(app)
 
 const AuthProviders = ({children}) => {
-    const [user,setUser] = useState(null)
+    const [user,setUser] = useState(null);
+    const [loading,setLoading] = useState(true)
 
     const createUser = (email,password)=>{
         return createUserWithEmailAndPassword(auth,email,password)
@@ -25,7 +26,8 @@ const AuthProviders = ({children}) => {
     useEffect(()=>{
        const unsubcribe =  onAuthStateChanged(auth,currentUser =>{
             console.log('observe on change',currentUser)
-            setUser(currentUser)
+            setUser(currentUser);
+            setLoading(false)
         });
         return()=>{
             unsubcribe();
@@ -33,6 +35,7 @@ const AuthProviders = ({children}) => {
     },[])
     const info={
         user,
+        loading,
         createUser,
         signIn,
         logOut
